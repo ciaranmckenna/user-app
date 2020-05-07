@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +24,10 @@ public class ReadUsersServlet extends HttpServlet {
 
 	public void init(ServletConfig config) {
 		try {
+			ServletContext context = config.getServletContext();
 			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection(config.getInitParameter("dbUrl"), 
-					config.getInitParameter("dbUser"), config.getInitParameter("dbPassword"));
+			connection = DriverManager.getConnection(context.getInitParameter("dbUrl"), 
+					context.getInitParameter("dbUser"), context.getInitParameter("dbPassword"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
