@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -26,6 +27,15 @@ public class CreateUserServlet extends HttpServlet {
 	public void init(ServletConfig config) {
 		try {
 			ServletContext context = config.getServletContext();
+			
+			Enumeration<String> parameterNames = context.getInitParameterNames(); 
+			
+			while (parameterNames.hasMoreElements()) {
+				String eachName = (String) parameterNames.nextElement();
+				System.out.println("Conetext param Name: " + eachName);
+				System.out.println("Context Param Value: " + context.getInitParameter(eachName));
+			}
+			
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(context.getInitParameter("dbUrl"), 
 					context.getInitParameter("dbUser"), context.getInitParameter("dbPassword"));
